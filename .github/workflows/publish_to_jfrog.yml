@@ -1,4 +1,4 @@
-name: A workflow to publish to jfrog
+name: "A workflow to publish to jfrog"
 on:
   workflow_dispatch:
 
@@ -7,9 +7,19 @@ jobs:
     name: publish to jfrog action
     runs-on: ubuntu-latest
     steps:
-      - uses: jfrog/setup-jfrog-cli@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup JFrog CLI
+        uses: jfrog/setup-jfrog-cli@v2
         env:
           JF_ARTIFACTORY_1: ${{ secrets.artifactory_token_1 }}
-      - run: |
+      - name: Run JFrog CLI
+        run: |
           # Ping the server
           jfrog rt ping
+          # Collect environment variables for the build
+          jfrog rt bce
+          # Collect VCS details from git and add them to the build
+          jfrog rt bag
+          # Publish build info
+          jfrog rt bp
