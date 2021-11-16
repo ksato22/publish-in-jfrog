@@ -1,13 +1,15 @@
 name: "JFrog CLI Example"
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v1
+        uses: jfrog/setup-jfrog-cli@v2
         env:
-          JF_ARTIFACTORY_1: ${{ secrets.artifactory_token_1 }}
+          JF_ARTIFACTORY_1: ${{ secrets.ARTIFACTORY_TOKEN_1 }}
