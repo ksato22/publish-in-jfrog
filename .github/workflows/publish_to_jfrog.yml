@@ -1,5 +1,6 @@
 name: "A workflow to publish to jfrog"
 on:
+  push:
   workflow_dispatch:
 
 jobs:
